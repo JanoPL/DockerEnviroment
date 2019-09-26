@@ -1,4 +1,4 @@
-FROM ubuntu:latest
+FROM debian:9
 
 RUN DEBIAN_FRONTEND=noninteractive
 
@@ -7,6 +7,12 @@ RUN apt-get update &&\
     apt-get install -y tzdata &&\
     apt-get install -y \
     wget apt-transport-https lsb-release ca-certificates apt-utils acl nano iproute2
+
+RUN \
+  apt-get -yqq install apt-transport-https lsb-release ca-certificates && \
+  wget -O /etc/apt/trusted.gpg.d/php.gpg https://packages.sury.org/php/apt.gpg && \
+  echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list && \
+  apt-get -qq update && apt-get -qqy upgrade
 
 ARG TARGET_PHP_VERSION=7.2
 RUN apt-get update &&\
@@ -52,7 +58,7 @@ RUN chmod 755 /var/www/html
 
 #xdebug
 
-ENV XDEBUGINI_PATH=/etc/php/7.2/cli/conf.d/20-xdebug.ini
+ENV XDEBUGINI_PATH=/etc/php/${TARGET_PHP_VERSION}/cli/conf.d/20-xdebug.ini
 COPY /Docker/config/xdebug.ini /20-xdebug.ini
 RUN cat /20-xdebug.ini >> $XDEBUGINI_PATH
 RUN echo "xdebug.remote_host="`ip route|awk '/default/ { print $3 }'` >> $XDEBUGINI_PATH
