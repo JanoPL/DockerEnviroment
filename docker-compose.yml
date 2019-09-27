@@ -111,3 +111,13 @@ services:
     networks:
       - ${COMPOSE_NETWORKS}
     restart: unless-stopped
+
+  adminer:
+    image: adminer
+    container_name: ${COMPOSE_PROJECT_NAME}_adminer
+    ports:
+      - 9993:8080
+    links:
+      - db:db
+    networks:
+      - ${COMPOSE_NETWORKS}
