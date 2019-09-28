@@ -12,6 +12,8 @@ services:
     image: mysql:${DB_VERSION}
     command: --default-authentication-plugin=mysql_native_password
     container_name: ${COMPOSE_PROJECT_NAME}_mysql_db
+    env_file: 
+      - .env
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
       MYSQL_DATABASE: ${COMPOSE_PROJECT_NAME}
@@ -22,12 +24,14 @@ services:
     ports:
       - 3306:3306
     networks:
-      - ${COMPOSE_NETWORKS}
+      - ${PROJECT_NETWORKS}
     restart: unless-stopped
 
   webserver_nginx:
     image: ${COMPOSE_PROJECT_NAME}_website_nginx:1.8
     container_name: ${COMPOSE_PROJECT_NAME}_website_webserver_nginx
+    env_file: 
+      - .env
     build:
       context: ..
       dockerfile: ./Docker/nginx/Dockerfile
@@ -39,13 +43,13 @@ services:
     links:
       - db:db
     networks:
-      - ${COMPOSE_NETWORKS}
+      - ${PROJECT_NETWORKS}
 
   php-fpm:
-    env_file:
-      - .env
     image: ${COMPOSE_PROJECT_NAME}_website_application:latest
     container_name: ${COMPOSE_PROJECT_NAME}_website_php-fpm
+    env_file: 
+      - .env
     build:
       context: ..
       dockerfile: ./Docker/php-fpm/Dockerfile
@@ -60,11 +64,13 @@ services:
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
     networks:
-      - ${COMPOSE_NETWORKS}
+      - ${PROJECT_NETWORKS}
 
   webserver:
     image: ${COMPOSE_PROJECT_NAME}_webserver_apache:latest
     container_name: ${COMPOSE_PROJECT_NAME}_webserver_apache
+    env_file: 
+      - .env
     build:
       context: ..
       dockerfile: ./Docker/apache/Dockerfile
@@ -80,16 +86,17 @@ services:
       - ${APP_CODE_PATH_HOST}/.:/var/www/html
       - ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
     networks:
-      - ${COMPOSE_NETWORKS}
+      - ${PROJECT_NETWORKS}
     links:
       - db:db
-#      - redis:devcache1
     depends_on:
       - db
 
   pma:
     image: phpmyadmin/phpmyadmin:latest
     container_name: ${COMPOSE_PROJECT_NAME}_pma
+    env_file: 
+      - .env
     volumes:
       - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
     ports:
@@ -97,7 +104,7 @@ services:
     links:
       - db:db
     networks:
-      - ${COMPOSE_NETWORKS}
+      - ${PROJECT_NETWORKS}
     restart: unless-stopped
     depends_on:
       - db
@@ -105,18 +112,22 @@ services:
   redis:
     image: redis
     container_name: ${COMPOSE_PROJECT_NAME}_redis
+    env_file: 
+      - .env
     ports:
       - 6379:6379
     networks:
-      - ${COMPOSE_NETWORKS}
+      - ${PROJECT_NETWORKS}
     restart: unless-stopped
 
   adminer:
     image: adminer
     container_name: ${COMPOSE_PROJECT_NAME}_adminer
+    env_file: 
+      - .env
     ports:
       - 9993:8080
     links:
       - db:db
     networks:
-      - ${COMPOSE_NETWORKS}
+      - ${PROJECT_NETWORKS}
