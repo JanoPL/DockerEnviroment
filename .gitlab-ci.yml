@@ -15,4 +15,4 @@ services:
       - docker-compose version
     script:
       - cd Docker
-      - docker-compo  up -d
+      - docker-compose  up -d
