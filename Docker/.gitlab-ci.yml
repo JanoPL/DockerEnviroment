@@ -8,3 +8,7 @@ build:
     - pip install docker-compose
     - docker-compose pull
     - docker-compose build 
+test:
+  script_before:
+    - docker-compose version
+    - docker-compo  up -d
