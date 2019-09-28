@@ -1,6 +1,6 @@
 image: docker
 services:
-  - docker:dind    
+    - docker:dind    
 build:
   script:
     - cd Docker
@@ -9,6 +9,7 @@ build:
     - docker-compose pull
     - docker-compose build 
 test:
-  script_before:
+  before_script:
     - docker-compose version
+  script:
     - docker-compo  up -d
