@@ -1,8 +1,14 @@
 ARG TARGET_PHP_VERSION=7.2
 FROM php:${TARGET_PHP_VERSION}-fpm
 
+LABEL Component="php-fpm" \
+      Name="php-fpm-${TARGET_PHP_VERSION}" \
+      version="${TARGET_PHP_VERSION}" \
+      release="1" \
+      author="JanoPL"
+
 COPY ./Docker/php-fpm/scripts/ /tmp/scripts/
-RUN chmod +x -R -v /tmp/
+RUN chmod +x -R /tmp/
 
 ARG TZ=UTC
 RUN /tmp/scripts/set-timezone.sh ${TZ}
@@ -26,8 +32,7 @@ WORKDIR ${APP_CODE_PATH_HOST}
 
 RUN mkdir -p /bin/docker-entrypoint/ \
  && cp /tmp/scripts/resolve-docker-host-ip.sh /bin/docker-entrypoint/ \
- && chmod +x -R /bin/docker-entrypoint/ \
-;
+ && chmod +x -R /bin/docker-entrypoint/
 
 ENTRYPOINT ["/bin/docker-entrypoint/resolve-docker-host-ip.sh","php-fpm"]
 EXPOSE 9000
