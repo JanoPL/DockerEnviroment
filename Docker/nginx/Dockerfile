@@ -34,7 +34,10 @@ RUN echo "nginx on CentOS7" > /usr/share/nginx/html/index.html
 
 EXPOSE 8080
 
+RUN ["chmod", "+x", "/usr/bin/container-entrypoint" , "/usr/bin/nginx18"]
+
 USER nginx
 
-ENTRYPOINT ["container-entrypoint"]
-CMD [ "nginx18" ]
+ENTRYPOINT ["/usr/bin/container-entrypoint"]
+
+CMD [ "/usr/bin/nginx18" ]
