@@ -69,4 +69,5 @@ RUN cat /20-xdebug.ini >> $XDEBUGINI_PATH
 RUN echo "xdebug.remote_host="`ip route|awk '/default/ { print $3 }'` >> $XDEBUGINI_PATH
 
 COPY /Docker/config/apache.conf /etc/apache2/sites-available/000-default.conf
+
 CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]
