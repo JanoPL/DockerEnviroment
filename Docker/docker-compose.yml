@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
 
   webserver_nginx:
-    image: ${COMPOSE_PROJECT_NAME}_website_nginx:1.8
+    image: ${COMPOSE_PROJECT_NAME}_website_nginx:1.12
     container_name: ${COMPOSE_PROJECT_NAME}_website_webserver_nginx
     env_file:
       - .env
@@ -41,6 +41,9 @@ services:
       - 9992:8080
     links:
       - db:db
+    volumes:
+      - ${APP_CODE_PATH_HOST}/:${APP_CODE_PATH_CONTAINER}
+      - ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
     networks:
       - ${PROJECT_NETWORKS}
 
@@ -60,8 +63,11 @@ services:
         - APP_USER_ID=${APP_USER_ID}
         - TARGET_PHP_VERSION=${PHP_VERSION}
         - TZ=${TIMEZONE}
+    links:
+      - db:db
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
+      - ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
     networks:
       - ${PROJECT_NETWORKS}
 
@@ -83,7 +89,7 @@ services:
       - 80
     volumes:
       - ${APP_CODE_PATH_HOST}/.:/var/www/html
-      - ${APP_CODE_PATH_HOST}/.env_docker:/var/www/html/cms-backend/.env
+      - ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
     networks:
       - ${PROJECT_NETWORKS}
     links:

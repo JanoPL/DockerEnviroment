@@ -12,4 +12,5 @@ apt-get update -y && apt-get install -y \
     sysstat \
     unzip \
     nano \
-    wget
+    wget \
+    bash
