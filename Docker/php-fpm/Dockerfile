@@ -27,7 +27,7 @@ COPY ./Docker/php-fpm/config/php/* /usr/local/etc/php/conf.d
 
 COPY ./Docker/php-fpm/config/php-fpm/* /usr/local/etc/php-fpm.d
 
-ARG APP_CODE_PATH_HOST="/var/www/html"
+ARG APP_CODE_PATH_HOST="/usr/share/nginx/html"
 WORKDIR ${APP_CODE_PATH_HOST}
 
 RUN mkdir -p /bin/docker-entrypoint/ \
