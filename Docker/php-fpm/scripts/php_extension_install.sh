@@ -12,4 +12,10 @@ wget -q -O /usr/local/bin/install-php-extensions https://raw.githubusercontent.c
 chmod uga+x /usr/local/bin/install-php-extensions && sync && install-php-extensions \
     opcache \
     xdebug \
+    mysqli \
+    pdo_mysql \
+    bz2 \
+    bcmath \
+    redis \
+    zip \
 ;
