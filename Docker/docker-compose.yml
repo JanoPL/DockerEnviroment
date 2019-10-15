@@ -36,7 +36,7 @@ services:
       context: ..
       dockerfile: ./Docker/nginx/Dockerfile
     environment:
-      XDEBUG_CONFIG: remote_host=192.168.1.213
+      XDEBUG_CONFIG: remote_host=192.168.1.2
     ports:
       - 9992:8080
     links:
@@ -82,7 +82,7 @@ services:
       args:
         - TARGET_PHP_VERSION=${PHP_VERSION}
     environment:
-      XDEBUG_CONFIG: remote_host=192.168.1.213
+      XDEBUG_CONFIG: remote_host=192.168.1.2
     restart: unless-stopped
     ports:
       - 9990:80
