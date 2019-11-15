@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  webserver:
+    image: ${COMPOSE_PROJECT_NAME}_webserver_apache:latest
+    container_name: ${COMPOSE_PROJECT_NAME}_webserver
+    env_file:
+      - .env
+    build:
+      context: ..
+      dockerfile: ./Docker/apache/Dockerfile
+      args:
+        - TARGET_PHP_VERSION=${PHP_VERSION}
+    environment:
+      XDEBUG_CONFIG: remote_host=192.168.1.213
+    restart: unless-stopped
+    ports:
+      - 9990:80
+      - 80
+    volumes:
+      - ${APP_CODE_PATH_HOST}/.:/var/www/html
+      - ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
+    networks:
+      - ${PROJECT_NETWORKS}
+    links:
+      - db:db
+    depends_on:
+      - db
