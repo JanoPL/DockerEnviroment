@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  pma:
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: ${COMPOSE_PROJECT_NAME}_pma
+    env_file:
+      - .env
+    volumes:
+      - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
+    ports:
+      - 9991:80
+    links:
+      - db:db
+    networks:
+      - ${PROJECT_NETWORKS}
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  adminer:
+    image: adminer
+    container_name: ${COMPOSE_PROJECT_NAME}_adminer
+    env_file:
+      - .env
+    ports:
+      - 9993:8080
+    links:
+      - db:db
+    networks:
+      - ${PROJECT_NETWORKS}
