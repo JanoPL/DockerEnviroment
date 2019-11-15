@@ -12,7 +12,7 @@ services:
     image: mysql:${DB_VERSION}
     command: --default-authentication-plugin=mysql_native_password
     container_name: ${COMPOSE_PROJECT_NAME}_mysql_db
-    env_file:
+    env_file: 
       - .env
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -27,16 +27,16 @@ services:
       - ${PROJECT_NETWORKS}
     restart: unless-stopped
 
-  webserver_nginx:
-    image: ${COMPOSE_PROJECT_NAME}_website_nginx:1.12
-    container_name: ${COMPOSE_PROJECT_NAME}_website_webserver_nginx
-    env_file:
+  webserver:
+    image: ${COMPOSE_PROJECT_NAME}_website_nginx:latest
+    container_name: ${COMPOSE_PROJECT_NAME}_website_webserver
+    env_file: 
       - .env
     build:
       context: ..
       dockerfile: ./Docker/nginx/Dockerfile
     environment:
-      XDEBUG_CONFIG: remote_host=192.168.1.2
+      XDEBUG_CONFIG: remote_host=192.168.1.213
     ports:
       - 9992:8080
     links:
@@ -50,7 +50,7 @@ services:
   php-fpm:
     image: ${COMPOSE_PROJECT_NAME}_website_application:latest
     container_name: ${COMPOSE_PROJECT_NAME}_website_php-fpm
-    env_file:
+    env_file: 
       - .env
     build:
       context: ..
@@ -71,68 +71,13 @@ services:
     networks:
       - ${PROJECT_NETWORKS}
 
-  webserver:
-    image: ${COMPOSE_PROJECT_NAME}_webserver_apache:latest
-    container_name: ${COMPOSE_PROJECT_NAME}_webserver_apache
-    env_file:
-      - .env
-    build:
-      context: ..
-      dockerfile: ./Docker/apache/Dockerfile
-      args:
-        - TARGET_PHP_VERSION=${PHP_VERSION}
-    environment:
-      XDEBUG_CONFIG: remote_host=192.168.1.2
-    restart: unless-stopped
-    ports:
-      - 9990:80
-      - 80
-    volumes:
-      - ${APP_CODE_PATH_HOST}/.:/var/www/html
-      - ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
-    networks:
-      - ${PROJECT_NETWORKS}
-    links:
-      - db:db
-    depends_on:
-      - db
-
-  pma:
-    image: phpmyadmin/phpmyadmin:latest
-    container_name: ${COMPOSE_PROJECT_NAME}_pma
-    env_file:
-      - .env
-    volumes:
-      - ./config/uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
-    ports:
-      - 9991:80
-    links:
-      - db:db
-    networks:
-      - ${PROJECT_NETWORKS}
-    restart: unless-stopped
-    depends_on:
-      - db
-
   redis:
     image: redis
     container_name: ${COMPOSE_PROJECT_NAME}_redis
-    env_file:
+    env_file: 
       - .env
     ports:
       - 6379:6379
     networks:
       - ${PROJECT_NETWORKS}
     restart: unless-stopped
-
-  adminer:
-    image: adminer
-    container_name: ${COMPOSE_PROJECT_NAME}_adminer
-    env_file:
-      - .env
-    ports:
-      - 9993:8080
-    links:
-      - db:db
-    networks:
-      - ${PROJECT_NETWORKS}
