@@ -1,7 +1,7 @@
 FROM centos:7
 LABEL Component="nginx" \
-      Name="centos/nginx-1-12-2-centos7" \
-      version="1.12.2" \
+      Name="centos/nginx-centos7" \
+      version="latest" \
       release="1"
 
 RUN yum -y install --setopt=tsflags=nodocs centos-release-scl-rh epel-release && \
@@ -33,8 +33,8 @@ ADD Docker/nginx/root /
 
 EXPOSE 8080
 
-RUN ["chmod", "+x", "/usr/bin/container-entrypoint" , "/usr/bin/nginx1_12"]
+RUN ["chmod", "+x", "/usr/bin/container-entrypoint" , "/usr/bin/nginx_script"]
 
 ENTRYPOINT ["/usr/bin/container-entrypoint"]
 
-CMD [ "/usr/bin/nginx1_12" ]
+CMD [ "/usr/bin/nginx_script" ]
