@@ -1,0 +1,18 @@
+version: "3.7"
+
+services:
+  redis_managment:
+    image: erikdubbelboer/phpredisadmin:latest
+    environment:
+      - ADMIN_USER=admin
+      - ADMIN_PASS=admin
+      - REDIS_1_HOST=redis
+      - REDIS_1_PORT=6379
+    links:
+      - redis:redis
+    ports:
+      - 9993:80
+    networks:
+      - ${PROJECT_NETWORKS}
+    env_file:
+      - ".env"
