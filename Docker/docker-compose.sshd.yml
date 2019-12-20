@@ -1,0 +1,16 @@
+version: "3.3"
+
+services:
+  sshd:
+    image: ${COMPOSE_PROJECT_NAME}_sshd:latest
+    build:
+      context: ..
+      dockerfile: ./Docker/sshd/Dockerfile
+      args:
+        - ROOT_PASSWORD=${SSH_ROOT}
+    ports:
+      - "9994:22"
+    env_file:
+      - ".env"
+    networks:
+      - ${PROJECT_NETWORKS}
