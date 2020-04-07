@@ -36,14 +36,14 @@ services:
       context: ..
       dockerfile: ./Docker/nginx/Dockerfile
     environment:
-      XDEBUG_CONFIG: remote_host=192.168.1.213
+      XDEBUG_CONFIG: remote_host=192.168.1.2
     ports:
       - 9992:8080
     links:
       - db:db
     volumes:
       - ${APP_CODE_PATH_HOST}/:${APP_CODE_PATH_CONTAINER}
-      - ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
+      #- ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
     networks:
       - ${PROJECT_NETWORKS}
 
@@ -67,7 +67,7 @@ services:
       - db:db
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
-      - ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
+      #- ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
     networks:
       - ${PROJECT_NETWORKS}
 

@@ -23,4 +23,6 @@ chmod uga+x /usr/local/bin/install-php-extensions && sync && install-php-extensi
     pdo_mysql \
     bz2 \
     redis \
+    zip \
+    xml \
 ;
