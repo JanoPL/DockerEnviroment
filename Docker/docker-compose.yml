@@ -1,8 +1,10 @@
-version: "3.3"
+version: "3.7"
 
 networks:
-  laravel-network:
+  symfony-network:
     driver: ${NETWORKS_DRIVER}
+    external:
+      name: symfony-network
 volumes:
   dbdata:
     driver: local
