@@ -3,7 +3,8 @@ FROM debian:9
 LABEL Component="apache" \
       Name="debian/apache-debian9" \
       version="1.0" \
-      release="1"
+      release="1" \
+      author="JanoPL"
 
 RUN DEBIAN_FRONTEND=noninteractive
 

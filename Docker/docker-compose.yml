@@ -1,8 +1,10 @@
-version: "3.3"
+version: "3.7"
 
 networks:
-  laravel-network:
+  symfony-network:
     driver: ${NETWORKS_DRIVER}
+    external:
+      name: symfony-network
 volumes:
   dbdata:
     driver: local
@@ -12,7 +14,7 @@ services:
     image: mysql:${DB_VERSION}
     command: --default-authentication-plugin=mysql_native_password
     container_name: ${COMPOSE_PROJECT_NAME}_mysql_db
-    env_file:
+    env_file: 
       - .env
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -36,21 +38,21 @@ services:
       context: ..
       dockerfile: ./Docker/nginx/Dockerfile
     environment:
-      XDEBUG_CONFIG: remote_host=192.168.1.213
+      XDEBUG_CONFIG: remote_host=192.168.1.2
     ports:
       - 9992:8080
     links:
       - db:db
     volumes:
       - ${APP_CODE_PATH_HOST}/:${APP_CODE_PATH_CONTAINER}
-      - ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
+      #- ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
     networks:
       - ${PROJECT_NETWORKS}
 
   php-fpm:
     image: ${COMPOSE_PROJECT_NAME}_website_application:latest
     container_name: ${COMPOSE_PROJECT_NAME}_website_php-fpm
-    env_file:
+    env_file: 
       - .env
     build:
       context: ..
@@ -67,14 +69,14 @@ services:
       - db:db
     volumes:
       - ${APP_CODE_PATH_HOST}:${APP_CODE_PATH_CONTAINER}
-      - ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
+      #- ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
     networks:
       - ${PROJECT_NETWORKS}
 
   redis:
     image: redis
     container_name: ${COMPOSE_PROJECT_NAME}_redis
-    env_file:
+    env_file: 
       - .env
     ports:
       - 6379:6379
