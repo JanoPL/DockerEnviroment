@@ -24,7 +24,7 @@ services:
     env_file:
       - .env
     ports:
-      - 9993:8080
+      - 9994:8080
     links:
       - db:db
     networks:
