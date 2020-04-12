@@ -11,7 +11,7 @@ services:
     links:
       - redis:redis
     ports:
-      - 9993:80
+      - 9995:80
     networks:
       - ${PROJECT_NETWORKS}
     env_file:

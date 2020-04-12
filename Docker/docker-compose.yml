@@ -40,7 +40,8 @@ services:
     environment:
       XDEBUG_CONFIG: remote_host=192.168.1.2
     ports:
-      - 9992:8080
+      - 9992:80
+      - 9993:443
     links:
       - db:db
     volumes:
