@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  frontend:
+    image: ${COMPOSE_PROJECT_NAME}_frontend:latest
+    container_name: ${COMPOSE_PROJECT_NAME}_frontend
+    env_file:
+      - .env
+    build:
+      context: ..
+      dockerfile: ./Docker/node/Dockerfile
+      args:
+        - APP_CODE_PATH_CONTAINER=${APP_CODE_PATH_CONTAINER}
+        - APP_CODE_PATH_HOST_FRONTEND=${APP_CODE_PATH_HOST_FRONTEND}
+    ports:
+    - 9996:4200
+    networks:
+      - ${PROJECT_NETWORKS}
+    volumes:
+    - ${APP_CODE_PATH_HOST_FRONTEND}:${APP_CODE_PATH_CONTAINER}
