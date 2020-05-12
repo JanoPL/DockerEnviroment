@@ -73,14 +73,3 @@ services:
       - ${APP_CODE_PATH_HOST}/.env_docker:/var/www/html/.env
     networks:
       - ${PROJECT_NETWORKS}
-
-  redis:
-    image: redis
-    container_name: ${COMPOSE_PROJECT_NAME}_redis
-    env_file: 
-      - .env
-    ports:
-      - 6379:6379
-    networks:
-      - ${PROJECT_NETWORKS}
-    restart: unless-stopped
