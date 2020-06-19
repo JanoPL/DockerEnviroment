@@ -10,9 +10,9 @@ volumes:
 
 services:
   db:
-    image: mysql:${DB_VERSION}
+    image: ${DB_TYPE}:${DB_VERSION}
     command: --default-authentication-plugin=mysql_native_password
-    container_name: ${COMPOSE_PROJECT_NAME}_mysql_db
+    container_name: ${COMPOSE_PROJECT_NAME}_${DB_TYPE}_db
     env_file: 
       - .env
     environment:
