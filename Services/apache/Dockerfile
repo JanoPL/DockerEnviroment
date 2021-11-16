@@ -66,10 +66,10 @@ RUN chmod 755 /var/www/html
 #xdebug
 
 ENV XDEBUGINI_PATH=/etc/php/${TARGET_PHP_VERSION}/cli/conf.d/20-xdebug.ini
-COPY /Docker/config/xdebug.ini /20-xdebug.ini
+COPY /Services/config/xdebug.ini /20-xdebug.ini
 RUN cat /20-xdebug.ini >> $XDEBUGINI_PATH
 RUN echo "xdebug.remote_host="`ip route|awk '/default/ { print $3 }'` >> $XDEBUGINI_PATH
 
-COPY /Docker/config/apache.conf /etc/apache2/sites-available/000-default.conf
+COPY /Services/config/apache.conf /etc/apache2/sites-available/000-default.conf
 
 CMD ["/usr/sbin/apachectl", "-D", "FOREGROUND"]

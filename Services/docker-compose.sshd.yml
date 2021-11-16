@@ -5,7 +5,7 @@ services:
     image: ${COMPOSE_PROJECT_NAME}_sshd:latest
     build:
       context: ..
-      dockerfile: ./Docker/sshd/Dockerfile
+      dockerfile: ./Services/sshd/Dockerfile
       args:
         - ROOT_PASSWORD=${SSH_ROOT}
     ports:

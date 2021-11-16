@@ -8,7 +8,7 @@ services:
       - .env
     build:
       context: ..
-      dockerfile: ./Docker/apache/Dockerfile
+      dockerfile: ./Services/apache/Dockerfile
       args:
         - TARGET_PHP_VERSION=${PHP_VERSION}
     environment:
@@ -19,7 +19,6 @@ services:
       - 80
     volumes:
       - ${APP_CODE_PATH_HOST}/.:/var/www/html
-      - ${APP_CODE_PATH_HOST}/cms-backend/.env_docker:/var/www/html/cms-backend/.env
     networks:
       - ${PROJECT_NETWORKS}
     links:

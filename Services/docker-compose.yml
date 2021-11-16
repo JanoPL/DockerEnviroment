@@ -36,7 +36,7 @@ services:
       - .env
     build:
       context: ..
-      dockerfile: ./Docker/nginx/Dockerfile
+      dockerfile: ./Services/nginx/Dockerfile
     environment:
       XDEBUG_CONFIG: remote_host=192.168.1.2
     ports:
@@ -57,7 +57,7 @@ services:
       - .env
     build:
       context: ..
-      dockerfile: ./Docker/php-fpm/Dockerfile
+      dockerfile: ./Services/php-fpm/Dockerfile
       args:
         - APP_CODE_PATH=${APP_CODE_PATH_CONTAINER}
         - APP_GROUP=${APP_GROUP}

@@ -8,7 +8,7 @@ services:
       - .env
     build:
       context: ..
-      dockerfile: ./Docker/node/Dockerfile
+      dockerfile: ./Services/node/Dockerfile
       args:
         - APP_CODE_PATH_CONTAINER=${APP_CODE_PATH_CONTAINER}
         - APP_CODE_PATH_HOST_FRONTEND=${APP_CODE_PATH_HOST_FRONTEND}
