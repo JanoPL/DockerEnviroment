@@ -1,4 +1,9 @@
 FROM node:12.8-alpine AS builder
+LABEL Component="nodejs" \
+      Name="nodejs" \
+      version="1.2" \
+      release="1" \
+      author="JanoPL"
 
 ARG APP_CODE_PATH_CONTAINER="/var/www/html"
 ARG APP_CODE_PATH_HOST_FRONTEND="./../../../silver-frontend"

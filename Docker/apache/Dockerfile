@@ -2,7 +2,7 @@ FROM debian:9
 
 LABEL Component="apache" \
       Name="debian/apache-debian9" \
-      version="1.0" \
+      version="1.2" \
       release="1" \
       author="JanoPL"
 

@@ -1,4 +1,9 @@
 FROM ubuntu:16.04
+LABEL Component="sshd" \
+      Name="ubuntu/sshd" \
+      version="1.2" \
+      release="1" \
+      author="JanoPL"
 
 RUN apt-get update &&\
     apt-get upgrade -y &&\

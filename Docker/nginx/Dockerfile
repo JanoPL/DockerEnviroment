@@ -1,7 +1,7 @@
 FROM centos:7
 LABEL Component="nginx" \
       Name="centos/nginx-centos7" \
-      version="latest" \
+      version="1.2" \
       release="1" \
       author="JanoPL"
 
