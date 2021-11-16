@@ -1,0 +1,8 @@
+#!/bin/bash
+
+openssl req -x509 -nodes -days 365 -subj \
+    "/C=CA/ST=QC/O=Docker, Inc./CN=nginxserver.local" \
+    -newkey rsa:2048 \
+    -keyout /etc/nginx/nginxdocker.key \
+    -out /etc/nginx/nginxdocker.crt \
+;

@@ -2,11 +2,12 @@ FROM centos:7
 LABEL Component="nginx" \
       Name="centos/nginx-centos7" \
       version="latest" \
-      release="1"
+      release="1" \
+      author="JanoPL"
 
 RUN yum -y install --setopt=tsflags=nodocs centos-release-scl-rh epel-release && \
     yum -y update --setopt=tsflags=nodocs && \
-    yum -y install --setopt=tsflags=nodocs scl-utils nginx iproute && \
+    yum -y install --setopt=tsflags=nodocs scl-utils nginx iproute openssl && \
     yum clean all
 
 RUN mkdir -p /usr/share/nginx/html
@@ -33,7 +34,9 @@ ADD Docker/nginx/root /
 
 EXPOSE 8080
 
-RUN ["chmod", "+x", "/usr/bin/container-entrypoint" , "/usr/bin/nginx_script"]
+RUN ["chmod", "+x", "/usr/bin/container-entrypoint" , "/usr/bin/nginx_script", "usr/bin/openssl_generate"]
+
+RUN sh /usr/bin/openssl_generate
 
 ENTRYPOINT ["/usr/bin/container-entrypoint"]
 

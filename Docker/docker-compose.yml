@@ -1,19 +1,20 @@
 version: "3.7"
 
 networks:
-  laravel-network:
+  symfony-network:
     driver: ${NETWORKS_DRIVER}
-
+    external:
+      name: symfony-network
 volumes:
   dbdata:
     driver: local
 
 services:
   db:
-    image: ${DB_TYPE}:${DB_VERSION}
+    image: mysql:${DB_VERSION}
     command: --default-authentication-plugin=mysql_native_password
-    container_name: ${COMPOSE_PROJECT_NAME}_${DB_TYPE}_db
-    env_file: 
+    container_name: ${COMPOSE_PROJECT_NAME}_mysql_db
+    env_file:
       - .env
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
@@ -39,7 +40,8 @@ services:
     environment:
       XDEBUG_CONFIG: remote_host=192.168.1.2
     ports:
-      - 9992:8080
+      - 9992:80
+      - 9993:443
     links:
       - db:db
     volumes:
@@ -51,7 +53,7 @@ services:
   php-fpm:
     image: ${COMPOSE_PROJECT_NAME}_website_application:latest
     container_name: ${COMPOSE_PROJECT_NAME}_website_php-fpm
-    env_file: 
+    env_file:
       - .env
     build:
       context: ..
@@ -71,14 +73,3 @@ services:
       - ${APP_CODE_PATH_HOST}/.env_docker:/var/www/html/.env
     networks:
       - ${PROJECT_NETWORKS}
-
-  redis:
-    image: redis
-    container_name: ${COMPOSE_PROJECT_NAME}_redis
-    env_file: 
-      - .env
-    ports:
-      - 6379:6379
-    networks:
-      - ${PROJECT_NETWORKS}
-    restart: unless-stopped

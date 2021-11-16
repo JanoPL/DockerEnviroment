@@ -25,7 +25,8 @@ chmod uga+x /usr/local/bin/install-php-extensions && sync && install-php-extensi
     redis \
     zip \
     xml \
+    apcu \
     fileinfo \
     imagick \
-    gd \
+    gd
 ;
