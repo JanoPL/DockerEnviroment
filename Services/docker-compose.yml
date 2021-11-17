@@ -1,10 +1,10 @@
 version: "3.7"
 
 networks:
-  symfony-network:
+  docker-env-network:
     driver: ${NETWORKS_DRIVER}
     external:
-      name: symfony-network
+      name: docker-env-network
 volumes:
   dbdata:
     driver: local

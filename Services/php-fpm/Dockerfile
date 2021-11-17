@@ -7,7 +7,7 @@ LABEL Component="php-fpm" \
       release="1" \
       author="JanoPL"
 
-COPY ./Docker/php-fpm/scripts/ /tmp/scripts/
+COPY ./Services/php-fpm/scripts/ /tmp/scripts/
 RUN chmod +x -R /tmp/
 
 ARG TZ=UTC
@@ -23,9 +23,9 @@ RUN /tmp/scripts/create_user.sh ${APP_USER} ${APP_GROUP} ${APP_USER_ID} ${APP_GR
 RUN /tmp/scripts/php_extension_install.sh
 RUN /tmp/scripts/install_software.sh
 
-COPY ./Docker/php-fpm/config/php/* /usr/local/etc/php/conf.d/
+COPY ./Services/php-fpm/config/php/* /usr/local/etc/php/conf.d/
 
-COPY ./Docker/php-fpm/config/php-fpm/* /usr/local/etc/php-fpm.d/
+COPY ./Services/php-fpm/config/php-fpm/* /usr/local/etc/php-fpm.d/
 
 ARG APP_CODE_PATH_HOST="/usr/share/nginx/html"
 WORKDIR ${APP_CODE_PATH_HOST}

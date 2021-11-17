@@ -28,5 +28,5 @@ chmod uga+x /usr/local/bin/install-php-extensions && sync && install-php-extensi
     apcu \
     fileinfo \
     imagick \
-    gd
+    gd \
 ;

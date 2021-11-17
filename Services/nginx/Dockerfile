@@ -26,7 +26,7 @@ RUN mkdir -p /usr/share/nginx/html
 #    ENV=${CONTAINER_SCRIPTS_PATH}/scl_enable \
 #    PROMPT_COMMAND=". ${CONTAINER_SCRIPTS_PATH}/scl_enable"
 
-ADD Docker/nginx/root /
+ADD Services/nginx/root /
 
 # ADD https://git.centos.org/sources/httpd/c7/acf5cccf4afaecf3afeb18c50ae59fd5c6504910 /usr/share/nginx/html/
 # RUN sed -i -e 's/Apache/nginx/g' -e '/apache_pb.gif/d' /usr/share/nginx/html/index.html
